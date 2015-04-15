@@ -1,3 +1,9 @@
 [submodule "cmake"]
 	path = cmake
 	url = https://github.com/samkellett/cmake-modules.git
+[submodule "ext/gtest"]
+	path = ext/gtest
+	url = https://chromium.googlesource.com/external/googletest
+[submodule "ext/gmock"]
+	path = ext/gmock
+	url = https://chromium.googlesource.com/external/googlemock
