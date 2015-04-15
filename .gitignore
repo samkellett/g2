@@ -1,3 +1,6 @@
+# g2 specific
+build/
+
 # Compiled Object files
 *.slo
 *.lo
