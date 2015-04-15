@@ -1,6 +1,9 @@
 # g2 specific
 build/
 
+# OS X specific
+.DS_Store
+
 # Compiled Object files
 *.slo
 *.lo

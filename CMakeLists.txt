@@ -2,10 +2,16 @@ project(g2 CXX)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-# set(G2_SOURCES
-# )
+include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/src
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 
-# add_library(${PROJECT_NAME} SHARED ${G2_SOURCES})
+set(G2_SOURCES
+  src/galaxy.cpp
+)
 
-# target_link_libraries(${PROJECT_NAME}
-# )
+add_library(${PROJECT_NAME} SHARED ${G2_SOURCES})
+
+target_link_libraries(${PROJECT_NAME}
+)
