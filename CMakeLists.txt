@@ -5,11 +5,19 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 set(MACOSX_RPATH ON)
 
+include(CTest)
 include(TranslationUnit)
 
+# Prep CTest and GTest to do their thing.
+enable_testing()
+add_subdirectory(ext/gtest)
+
+# Set up our project's search path.
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   ${CMAKE_CURRENT_SOURCE_DIR}/include
+
+  ${gtest_SOURCE_DIR}/include
 )
 
 # Find all our translation units.

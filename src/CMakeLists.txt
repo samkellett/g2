@@ -1,9 +1,10 @@
+# Translation units built in the ./src directory.
 
 translation_unit(
   FILE
     galaxy.cpp
 
-  # TEST test/test_galaxy.cpp
-  # TEST_LIBRARIES
-  #   gtest_main
+  TEST test/test_galaxy.cpp
+  TEST_LIBRARIES
+    gtest_main
 )
