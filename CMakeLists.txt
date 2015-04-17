@@ -5,8 +5,42 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 set(MACOSX_RPATH ON)
 
-include(CTest)
+include(AddCompilerFlag)
 include(TranslationUnit)
+
+include(CTest)
+
+# Compiler flags:
+add_compiler_flag(CXX
+  ALL
+    -std=c++1y
+    -fno-rtti
+    -fvisibility=hidden
+
+  CLANG
+    -stdlib=libc++
+)
+
+# Warnings:
+add_compiler_flag(CXX
+  ALL
+    -Werror
+
+    -Wall
+    -Wextra
+    -pedantic
+
+    -Wold-style-cast
+    -Woverloaded-virtual
+    -Wpointer-arith
+    -Wcast-qual
+    -Woverflow
+    -Wmissing-declarations
+    -Wredundant-decls
+
+    # For gtest...
+    -Wno-missing-field-initializers
+)
 
 # Prep CTest and GTest to do their thing.
 enable_testing()
