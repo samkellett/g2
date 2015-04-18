@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(g2 CXX)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 set(MACOSX_RPATH ON)
 
@@ -24,6 +24,9 @@ add_compiler_flag(CXX
   GCC
     -fipa-pure-const
 )
+
+# Project dependencies.
+find_package(Meta)
 
 # Prep CTest.
 enable_testing()
@@ -80,6 +83,7 @@ include_directories(
 
 # 3rd-party code is include as system headers to avoid warnings.
 include_directories(SYSTEM
+  ${Meta_INCLUDE_DIR}
   ${gtest_SOURCE_DIR}/include
 )
 
