@@ -19,6 +19,10 @@ add_compiler_flag(CXX
 
   CLANG
     -stdlib=libc++
+    -fcolor-diagnostics
+
+  GCC
+    -fipa-pure-const
 )
 
 # Prep CTest.
