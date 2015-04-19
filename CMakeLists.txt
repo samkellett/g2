@@ -3,8 +3,6 @@ project(g2 CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-set(MACOSX_RPATH ON)
-
 include(AddCompilerFlag)
 include(TranslationUnit)
 
@@ -93,6 +91,8 @@ add_subdirectory(src)
 
 # And create our shared library.
 add_library(${PROJECT_NAME} SHARED ${g2_SOURCES})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_RPATH ON)
 
 target_link_libraries(${PROJECT_NAME}
 )
