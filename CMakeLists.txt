@@ -25,13 +25,13 @@ add_compiler_flag(CXX
     -fipa-pure-const
 )
 
-# Project dependencies.
-find_package(Meta)
-
 # Prep CTest.
 enable_testing()
 
-# Include gtest before we set project warnings as it is rife.
+# External project dependencies.
+find_package(Meta)
+
+# Internal dependencies.
 add_subdirectory(ext/gtest)
 
 # Warnings:
@@ -84,7 +84,8 @@ include_directories(
 # 3rd-party code is include as system headers to avoid warnings.
 include_directories(SYSTEM
   ${Meta_INCLUDE_DIR}
-  ${gtest_SOURCE_DIR}/include
+
+  ext/gtest/include
 )
 
 # Find all our translation units.
