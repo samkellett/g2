@@ -23,12 +23,6 @@ add_compiler_flag(CXX
     -fipa-pure-const
 )
 
-# Prep CTest.
-enable_testing()
-
-# External project dependencies.
-find_package(Meta)
-
 # Internal dependencies.
 add_subdirectory(ext/gtest)
 
@@ -73,6 +67,13 @@ add_compiler_flag(CXX
     -Wzero-as-null-pointer-constant
 )
 
+# Prep CTest.
+enable_testing()
+
+# External project dependencies.
+find_package(Meta)
+find_package(Tick)
+
 # Set up our project's search path.
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -82,6 +83,7 @@ include_directories(
 # 3rd-party code is include as system headers to avoid warnings.
 include_directories(SYSTEM
   ${Meta_INCLUDE_DIR}
+  ${Tick_INCLUDE_DIR}
 
   ext/gtest/include
 )
