@@ -72,7 +72,6 @@ enable_testing()
 
 # External project dependencies.
 find_package(Meta)
-find_package(Tick)
 
 # Set up our project's search path.
 include_directories(
@@ -83,7 +82,6 @@ include_directories(
 # 3rd-party code is include as system headers to avoid warnings.
 include_directories(SYSTEM
   ${Meta_INCLUDE_DIR}
-  ${Tick_INCLUDE_DIR}
 
   ext/gtest/include
 )
