@@ -27,6 +27,7 @@ install:
   # - cmake ..
 
 # script: make tests -k
+script: echo "hello"
 
 notifications:
   email: false
