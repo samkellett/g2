@@ -1,6 +1,9 @@
 language: cpp
 sudo: true
 
+os:
+  - linux
+
 compiler:
   - clang
   - gcc
@@ -11,15 +14,17 @@ branches:
 
 # Install dependencies
 before_install:
-  - export CHECKOUT_PATH=`pwd`
-  - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
-  - bii setup:cpp
-  # - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  # - sudo apt-get update -qq
-  # - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-4.8-dev clang-3.5; fi
-  # - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq libstdc++-4.9-dev g++-4.9; fi
-  # - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-  # - cd $CHECKOUT_PATH
+  # Avoids a lengthy upgrade process for the java packages.
+  - sudo apt-mark hold oracle-java7-installer oracle-java8-installer
+  - sudo apt-get update
+  - if [ "$CXX" = "g++" ]; then
+      wget https://github.com/biicode/misc/blob/master/travis/cpp/gcc_update.sh;
+      ./gcc_update --version 4.9;
+    fi
+  - if [ "$CXX" = "clang++" ]; then
+      wget https://github.com/biicode/misc/blob/master/travis/cpp/clang_update.sh;
+      ./clang_update --version 3.5 --libc++;
+    fi
 
 install:
   - mkdir build
@@ -27,7 +32,7 @@ install:
   # - cmake ..
 
 # script: make tests -k
-script: echo "hello"
+script: $CXX --version
 
 notifications:
   email: false
