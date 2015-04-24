@@ -18,12 +18,12 @@ before_install:
   - sudo apt-mark hold oracle-java7-installer oracle-java8-installer
   - sudo apt-get update -qq
   - if [ "$CXX" = "g++" ]; then
-      wget https://github.com/biicode/misc/blob/master/travis/cpp/gcc_update.sh;
+      wget https://raw.githubusercontent.com/biicode/misc/master/travis/cpp/gcc_update.sh;
       chmod +x gcc_update.sh;
       ./gcc_update.sh --version 4.9;
     fi
   - if [ "$CXX" = "clang++" ]; then
-      wget https://github.com/biicode/misc/blob/master/travis/cpp/clang_update.sh;
+      wget https://raw.githubusercontent.com/biicode/misc/master/travis/cpp/clang_update.sh;
       chmod +x clang_update.sh;
       ./clang_update.sh --version 3.5 --libc++;
     fi
