@@ -18,22 +18,8 @@ before_install:
   - sudo apt-mark hold oracle-java7-installer oracle-java8-installer
   # Update system
   - sudo apt-get update -qq
-  # Install CMake 3.2
-  - sudo apt-get install cmake
-  # - wget http://www.cmake.org/files/v3.2/cmake-3.2.2-Linux-x86_64.sh
-  # - chmod +x cmake-3.2.2-Linux-x86_64.sh
-  # - ./cmake-3.2.2-Linux-x86_64.sh
-  # Update compilers
-  - if [ "$CXX" = "g++" ]; then
-      wget https://raw.githubusercontent.com/biicode/misc/master/travis/cpp/gcc_update.sh;
-      chmod +x gcc_update.sh;
-      ./gcc_update.sh --version 4.9;
-    fi
-  - if [ "$CXX" = "clang++" ]; then
-      wget https://raw.githubusercontent.com/biicode/misc/master/travis/cpp/clang_update.sh;
-      chmod +x clang_update.sh;
-      ./clang_update.sh --version 3.5 --libc++;
-    fi
+  # Get dependencies
+  - ./scripts/getdeps.sh
 
 install:
   - mkdir build
