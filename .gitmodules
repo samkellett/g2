@@ -7,3 +7,6 @@
 [submodule "ext/gmock"]
 	path = ext/gmock
 	url = https://chromium.googlesource.com/external/googlemock
+[submodule "scripts/misc"]
+	path = scripts/misc
+	url = https://github.com/biicode/misc.git
