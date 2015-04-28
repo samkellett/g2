@@ -30,6 +30,8 @@ install:
 script:
   - cmake --version
   - $CXX --version
+  - ls /usr/local
+  - echo $PATH
 
 notifications:
   email: false
