@@ -24,7 +24,7 @@ add_compiler_flag(CXX
 )
 
 # Internal dependencies.
-add_subdirectory(ext/gtest)
+add_subdirectory(ext/gmock)
 
 # Warnings:
 add_compiler_flag(CXX
@@ -86,6 +86,7 @@ include_directories(SYSTEM
   ${YAMLCPP_INCLUDE_DIR}
 
   ext/gtest/include
+  ext/gmock/include
 )
 
 # Find all our translation units.
