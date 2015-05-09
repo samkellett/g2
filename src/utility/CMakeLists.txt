@@ -9,3 +9,14 @@ translation_unit(
   TEST_LIBRARIES
     gmock_main
 )
+
+translation_unit(
+  FILE
+    scoped_file.hpp
+
+  TEST test/test_scoped_file.cpp
+  TEST_LIBRARIES
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY}
+    gtest_main
+)
