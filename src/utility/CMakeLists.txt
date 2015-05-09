@@ -13,10 +13,11 @@ translation_unit(
 translation_unit(
   FILE
     scoped_file.hpp
+  LIBRARIES
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY}
 
   TEST test/test_scoped_file.cpp
   TEST_LIBRARIES
-    ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY}
     gtest_main
 )
