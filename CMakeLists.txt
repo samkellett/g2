@@ -72,6 +72,7 @@ enable_testing()
 
 # External project dependencies.
 find_package(Boost 1.58 EXACT REQUIRED COMPONENTS filesystem system)
+find_package(GLFW REQUIRED)
 find_package(Meta REQUIRED)
 find_package(YamlCpp REQUIRED)
 
@@ -84,6 +85,7 @@ include_directories(
 # 3rd-party code is include as system headers to avoid warnings.
 include_directories(SYSTEM
   ${Boost_INCLUDE_DIRS}
+  ${GLFW_INCLUDE_DIR}
   ${Meta_INCLUDE_DIR}
   ${YAMLCPP_INCLUDE_DIR}
 
