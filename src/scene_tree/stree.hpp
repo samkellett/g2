@@ -8,7 +8,7 @@ namespace scene_tree {
 class stree
 {
 public:
-  stree(std::string title);
+  explicit stree(std::string title);
 
   stree(const stree &) = delete;
   stree &operator=(const stree &) = delete;
@@ -24,7 +24,7 @@ private:
 
 inline
 stree::stree(std::string title)
-: title_(std::move(title))
+: title_{std::move(title)}
 {
 }
 
