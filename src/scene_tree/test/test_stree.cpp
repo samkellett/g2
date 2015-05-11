@@ -8,16 +8,25 @@ using testing::Test;
 
 struct Fixture : public Test
 {
-	scene_tree::stree a;
+	scene_tree::stree uut;
 
 	Fixture()
-	: a("badger")
+	: uut("badger")
 	{
 	}
 };
 
 TEST_F(Fixture, TitleIsCorrect)
 {
-	ASSERT_EQ("badger", a.title());
+	ASSERT_EQ("badger", uut.title());
 }
 
+TEST_F(Fixture, Equality_Matches)
+{
+	ASSERT_EQ(scene_tree::stree("badger"), uut);
+}
+
+TEST_F(Fixture, DifferentTitle_DoesntMatch)
+{
+	ASSERT_NE(scene_tree::stree("fox"), uut);
+}

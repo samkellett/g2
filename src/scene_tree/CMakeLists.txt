@@ -15,6 +15,17 @@ translation_unit(
 
 translation_unit(
   FILE
+    make_tree.hpp
+  LIBRARIES
+    ${YAMLCPP_LIBRARY}
+
+  TEST test/test_make_tree.cpp
+  TEST_LIBRARIES
+    gtest_main
+)
+
+translation_unit(
+  FILE
     stree.hpp
 
   TEST test/test_stree.cpp
