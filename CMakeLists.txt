@@ -71,7 +71,7 @@ add_compiler_flag(CXX
 enable_testing()
 
 # External project dependencies.
-find_package(Boost 1.57 EXACT REQUIRED COMPONENTS filesystem system)
+find_package(Boost 1.58 EXACT REQUIRED COMPONENTS filesystem system)
 find_package(Meta REQUIRED)
 find_package(YamlCpp REQUIRED)
 
