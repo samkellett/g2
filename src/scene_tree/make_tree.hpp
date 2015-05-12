@@ -13,7 +13,10 @@ struct make_tree
   {
     auto title(config["title"].as<std::string>());
 
-	return stree(std::move(title));
+    auto width(config["width"].as<int>());
+    auto height(config["height"].as<int>());
+
+  	return stree(std::move(title), std::move(width), std::move(height));
   }
 };
 

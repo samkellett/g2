@@ -18,8 +18,12 @@ struct Fixture : Test
 
 TEST_F(Fixture, ParseYamlIntoSTree)
 {
-  auto config(YAML::Load("title: badger"));
+  auto config(YAML::Load(
+    "title: badger\n"
+    "width: 640\n"
+    "height: 480\n"
+  ));
 
-  ASSERT_EQ(scene_tree::stree("badger"), uut(config));
+  ASSERT_EQ(scene_tree::stree("badger", 640, 480), uut(config));
 }
 
