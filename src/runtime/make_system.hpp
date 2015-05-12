@@ -11,7 +11,7 @@ struct make_system
 
   system operator()(scene_tree::stree tree)
   {
-    return system(std::move(tree));
+    return system(std::move(tree), nullptr);
   }
 };
 
