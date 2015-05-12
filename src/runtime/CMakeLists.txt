@@ -22,3 +22,14 @@ translation_unit(
     gtest_main
 )
 
+translation_unit(
+  FILE
+    window.hpp
+  LIBRARIES
+    ${GLFW_LIBRARIES}
+
+  TEST test/test_window.cpp
+  TEST_LIBRARIES
+    gtest_main
+)
+
