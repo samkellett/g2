@@ -13,7 +13,7 @@ add_compiler_flag(CXX
   ALL
     -std=c++1y
     -fno-rtti
-    -fvisibility=hidden
+    # -fvisibility=hidden
 
   CLANG
     -stdlib=libc++
@@ -79,7 +79,8 @@ find_package(YamlCpp REQUIRED)
 # Set up our project's search path.
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/tools/mockglfw/src
 )
 
 # 3rd-party code is include as system headers to avoid warnings.
@@ -99,6 +100,9 @@ link_directories(
 
 # Find all our translation units.
 add_subdirectory(src)
+
+# Tools.
+add_subdirectory(tools)
 
 # And create our shared library.
 # add_library(${PROJECT_NAME} SHARED ${g2_SOURCES})
