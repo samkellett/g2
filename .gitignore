@@ -1,6 +1,9 @@
 # g2 specific
 build/
 
+# VIM related
+.syntastic_cpp_config
+
 # OS X specific
 .DS_Store
 

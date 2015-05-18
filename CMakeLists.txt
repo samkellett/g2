@@ -4,6 +4,7 @@ project(g2 CXX)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(AddCompilerFlag)
+include(CreateSyntasticConfig)
 include(TranslationUnit)
 
 include(CTest)
@@ -97,6 +98,9 @@ include_directories(SYSTEM
 link_directories(
   ${Boost_LIBRARY_DIRS}
 )
+
+# Create a sytastic config file that contains our include directories.
+create_syntastic_config()
 
 # Find all our translation units.
 add_subdirectory(src)
