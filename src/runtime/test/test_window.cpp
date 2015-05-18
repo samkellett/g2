@@ -1,8 +1,12 @@
 #include "runtime/window.hpp"
 
-#include <gtest/gtest.h>
+#include <mockglfw.hpp>
+
+#include <gmock/gmock.h>
 
 using namespace g2;
+
+using testing::_;
 
 TEST(Fixture, DefaultWindowNullptr)
 {
@@ -12,8 +16,10 @@ TEST(Fixture, DefaultWindowNullptr)
 
 TEST(Fixture, WindowAssignedNotNullptr)
 {
-  glfwInit();
-  auto *window(glfwCreateWindow(1, 2, "", nullptr, nullptr));
+  EXPECT_CALL(tools::mockglfw::instance(), glfwDestroyWindow(_))
+    .Times(1);
+
+  auto *window(reinterpret_cast<GLFWwindow *>(0xf00d));
 
   runtime::window uut;
   uut = window;
@@ -23,8 +29,10 @@ TEST(Fixture, WindowAssignedNotNullptr)
 
 TEST(Fixture, WindowAssignedSavesPointer)
 {
-  glfwInit();
-  auto *window(glfwCreateWindow(1, 2, "", nullptr, nullptr));
+  EXPECT_CALL(tools::mockglfw::instance(), glfwDestroyWindow(_))
+    .Times(1);
+
+  auto *window(reinterpret_cast<GLFWwindow *>(0xf00d));
 
   runtime::window uut;
   uut = window;
