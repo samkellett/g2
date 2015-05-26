@@ -1,18 +1,26 @@
 #include "runtime/system.hpp"
 
+#include <mockglfw.hpp>
+
 #include <gtest/gtest.h>
 
 using namespace g2;
 
+using testing::_;
+using testing::NiceMock;
 using testing::Test;
 
 struct Fixture : public Test
 {
+  NiceMock<tools::mockglfw> mockglfw;
+
   runtime::system uut;
   const runtime::system &const_uut;
 
   Fixture()
-  : uut(scene_tree::stree("badger", 640, 480), reinterpret_cast<GLFWwindow *>(0xf00d)),
+  : mockglfw(),
+
+    uut(scene_tree::stree("badger", 640, 480), reinterpret_cast<GLFWwindow *>(0xf00d)),
     const_uut(uut)
   {
   }
