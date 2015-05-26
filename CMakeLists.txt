@@ -81,7 +81,7 @@ find_package(YamlCpp REQUIRED)
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/tools/mockglfw/src
+  ${CMAKE_CURRENT_SOURCE_DIR}/tools
 )
 
 # 3rd-party code is include as system headers to avoid warnings.

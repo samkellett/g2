@@ -1,6 +1,6 @@
 #include "runtime/system.hpp"
 
-#include <mockglfw.hpp>
+#include <mockglfw/mockglfw.hpp>
 
 #include <gtest/gtest.h>
 

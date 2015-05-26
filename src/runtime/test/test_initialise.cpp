@@ -2,7 +2,7 @@
 
 #include "runtime/make_system.hpp"
 
-#include <mockglfw.hpp>
+#include <mockglfw/mockglfw.hpp>
 
 #include <gmock/gmock.h>
 

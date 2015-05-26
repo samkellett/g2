@@ -1,12 +1,11 @@
 project(mockglfw CXX)
 
 include_directories(
-  ${CMAKE_CURRENT_SOURCE_DIR}/src
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 set(${PROJECT_NAME}_SOURCES
-  src/mockglfw.hpp
-  src/mockglfw.cpp
+  mockglfw.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${mockglfw_SOURCES})
