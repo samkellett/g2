@@ -10,23 +10,23 @@ namespace tools {
 class mockglfw
 {
 public:
-  static mockglfw &instance();
+  mockglfw();
+  static mockglfw *instance;
 
-  MOCK_CONST_METHOD5(glfwCreateWindow, GLFWwindow*(int,int,const char*, GLFWmonitor*, GLFWwindow*));
+  MOCK_CONST_METHOD5(glfwCreateWindow,GLFWwindow*(int,int,const char*,GLFWmonitor*,GLFWwindow*));
   MOCK_CONST_METHOD1(glfwDestroyWindow, void(GLFWwindow *));
+  MOCK_CONST_METHOD0(glfwInit, int());
+  MOCK_CONST_METHOD1(glfwMakeContextCurrent, void(GLFWwindow *));
+  MOCK_CONST_METHOD1(glfwSetErrorCallback, GLFWerrorfun(GLFWerrorfun));
 
 private:
-  mockglfw() = default;
-
   mockglfw(const mockglfw &) = delete;
   mockglfw &operator=(mockglfw) = delete;
 };
 
-mockglfw &mockglfw::instance()
+mockglfw::mockglfw()
 {
-  static mockglfw instance;
-
-  return instance;
+  instance = this;
 }
 
 } // namespace tools
