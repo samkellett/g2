@@ -28,7 +28,7 @@ public:
 
   template <typename T>
     // requires_t<Copyable<T> || Moveable<T>> ... or maybe not?
-  constexpr auto operator()(T &&t) -> decltype(std::declval<G>()(std::declval<F>()(std::forward<T>(t))))
+  constexpr auto operator()(T &&t) const
   {
     return outer_(inner_(std::forward<T>(t)));
   }
@@ -49,5 +49,26 @@ using compose = meta::fold<meta::list<Ts...>, T, meta::lambda<meta::_a, meta::_b
   >
 >;
 
+template <typename F>
+constexpr auto make_composed(F &&f)
+{
+  return std::forward<F>(f);
+}
+
+template <typename F, typename G>
+constexpr auto make_composed(F &&f, G &&g)
+{
+  return detail::composed<F, G>(std::forward<F>(f), std::forward<G>(g));
+}
+
+template <typename F, typename G, typename... Gs>
+constexpr auto make_composed(F &&f, G &&g, Gs&& ...gs)
+{
+  using detail::composed;
+
+  return make_composed(composed<F, G>(std::forward<F>(f), std::forward<G>(g)), std::forward<Gs>(gs)...);
+}
+
 } // namespace utils
 } // namespace g2
+

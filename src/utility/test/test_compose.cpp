@@ -2,6 +2,8 @@
 
 #include <gmock/gmock.h>
 
+#include <boost/format.hpp>
+
 using namespace g2;
 using namespace utils;
 
@@ -121,3 +123,23 @@ TEST_F(ComposeKappaOfLambda, LambdaReturnValueReturned)
 
   ASSERT_EQ(89, uut("badger"));
 }
+
+int foo(std::string s) { return std::stoi(s); }
+double bar(int i) { return double(i * 2); }
+
+TEST(MakeComposed, TwoFunctions_ExpectedOutput)
+{
+  auto uut(make_composed(&foo, &bar));
+
+  ASSERT_EQ(2.0, uut("1"));
+}
+
+std::string quux(double d) { return boost::str(boost::format("%.1f") % d); }
+
+TEST(MakeComposed, Threefunctions_ExpectedOutput)
+{
+  auto uut(make_composed(&foo, &bar, &quux));
+
+  ASSERT_EQ("2.0", uut("1"));
+}
+
