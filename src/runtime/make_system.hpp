@@ -5,15 +5,10 @@
 namespace g2 {
 namespace runtime {
 
-struct make_system
+system make_system(scene_tree::stree tree)
 {
-  make_system() = default;
-
-  system operator()(scene_tree::stree tree)
-  {
-    return system(std::move(tree), nullptr);
-  }
-};
+  return system(std::move(tree), nullptr);
+}
 
 } // namespace runtime
 } // namespace g2

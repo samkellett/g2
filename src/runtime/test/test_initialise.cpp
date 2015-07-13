@@ -21,15 +21,11 @@ struct InitialiseFixture : testing::Test
   scene_tree::stree tree;
   runtime::system env;
 
-  runtime::initialise uut;
-
   InitialiseFixture()
   : mockglfw(),
 
     tree("badger", 1, 2),
-    env(runtime::make_system()(std::move(tree))),
-
-    uut()
+    env(runtime::make_system(std::move(tree)))
   {
     ON_CALL(mockglfw, glfwSetErrorCallback(&glfw_error_callback))
       .WillByDefault(Return(nullptr));
@@ -47,7 +43,7 @@ TEST_F(InitialiseFixture, SetsErrorCallback)
   EXPECT_CALL(mockglfw, glfwSetErrorCallback(&glfw_error_callback))
     .Times(1);
 
-  uut(std::move(env));
+  runtime::initialise(std::move(env));
 }
 
 TEST_F(InitialiseFixture, InitTrue_NoThrow)
@@ -56,7 +52,7 @@ TEST_F(InitialiseFixture, InitTrue_NoThrow)
     .Times(1);
 
   ASSERT_NO_THROW({
-    uut(std::move(env));
+    runtime::initialise(std::move(env));
   });
 }
 
@@ -66,7 +62,7 @@ TEST_F(InitialiseFixture, InitFalse_ThrowsGlfwError)
     .WillOnce(Return(GL_FALSE));
 
   ASSERT_THROW({
-    uut(std::move(env));
+    runtime::initialise(std::move(env));
   }, glfw_error);
 }
 
@@ -76,7 +72,7 @@ TEST_F(InitialiseFixture, InitFalse_GlfwErrorCodeMinus1)
     .WillOnce(Return(GL_FALSE));
 
   try {
-    uut(std::move(env));
+    runtime::initialise(std::move(env));
   } catch(glfw_error &e) {
     ASSERT_EQ(-1, e.error());
   }
@@ -94,7 +90,7 @@ TEST_F(InitialiseFixture, CreateWindowCalledWithEnvArgs_NoThrow)
       .Times(1);
 
   ASSERT_NO_THROW({
-    uut(std::move(env));
+    runtime::initialise(std::move(env));
   });
 }
 
@@ -104,7 +100,7 @@ TEST_F(InitialiseFixture, CreateWindowReturnsNull_ThrowsGlfwError)
     .WillOnce(Return(nullptr));
 
   ASSERT_THROW({
-    uut(std::move(env));
+    runtime::initialise(std::move(env));
   }, glfw_error);
 }
 
@@ -114,7 +110,7 @@ TEST_F(InitialiseFixture, CreateWindowReturnsNull_GlfwErrorCodeMinus2)
     .WillOnce(Return(nullptr));
 
   try {
-    uut(std::move(env));
+    runtime::initialise(std::move(env));
   } catch(glfw_error &e) {
     ASSERT_EQ(-2, e.error());
   }
@@ -130,14 +126,14 @@ TEST_F(InitialiseFixture, MakeContextCurrentCalledWithWindowPointer)
   EXPECT_CALL(mockglfw, glfwMakeContextCurrent(reinterpret_cast<GLFWwindow *>(0xbeef)))
     .Times(1);
 
-  uut(std::move(env));
+  runtime::initialise(std::move(env));
 }
 
 TEST_F(InitialiseFixture, NewEnv_ExpectedTree)
 {
   const scene_tree::stree new_tree("badger", 1, 2);
 
-  const auto &new_env(uut(std::move(env)));
+  const auto &new_env(runtime::initialise(std::move(env)));
   ASSERT_EQ(new_tree, new_env.tree());
 }
 
@@ -145,7 +141,7 @@ TEST_F(InitialiseFixture, NewEnv_ExpectedWindow)
 {
   const runtime::window new_window(reinterpret_cast<GLFWwindow *>(0xf00d));
 
-  const auto &new_env(uut(std::move(env)));
+  const auto &new_env(runtime::initialise(std::move(env)));
   ASSERT_EQ(new_window, new_env.window());
 }
 

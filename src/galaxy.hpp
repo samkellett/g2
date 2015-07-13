@@ -1,6 +1,7 @@
 #pragma once
 
-#include "runtime/system.hpp"
+#include "runtime/initialise.hpp"
+#include "runtime/make_system.hpp"
 
 #include "scene_tree/load_yml.hpp"
 #include "scene_tree/make_tree.hpp"
@@ -9,13 +10,12 @@
 
 namespace g2 {
 
-using galaxy = utils::compose<
+constexpr auto galaxy(utils::make_composed(
   scene_tree::load_yml,
   scene_tree::make_tree,
-  runtime::make_system
-//  runtime::initialise,
-//  runtime::exec
->;
+  runtime::make_system,
+  runtime::initialise
+));
 
 /*
 
