@@ -19,6 +19,7 @@ add_compiler_flag(CXX
   CLANG
     -stdlib=libc++
     -fcolor-diagnostics
+    -Wno-gnu-string-literal-operator-template
 
   GCC
     -fipa-pure-const
@@ -100,7 +101,7 @@ link_directories(
 )
 
 # Create a sytastic config file that contains our include directories.
-create_syntastic_config()
+#create_syntastic_config()
 
 # Find all our translation units.
 add_subdirectory(src)
