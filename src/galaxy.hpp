@@ -23,7 +23,7 @@ galaxy is a composition of functions that start as a yaml configuration file and
 end as a runtime with a world_tree.
 
 template <typename... Ts,
-  requires_t<Component<Ts>...> = 0>
+  requires_t<Component<Ts>...>>
 using galaxy = compose<
   load_config,
   make_tree<Ts...>,

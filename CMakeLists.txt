@@ -100,7 +100,7 @@ link_directories(
 )
 
 # Create a sytastic config file that contains our include directories.
-create_syntastic_config()
+#create_syntastic_config()
 
 # Find all our translation units.
 add_subdirectory(src)

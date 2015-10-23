@@ -1,5 +1,6 @@
 # Translation units built in the ./src/utility directory.
 add_subdirectory(ml)
+add_subdirectory(monad)
 
 translation_unit(
   FILE

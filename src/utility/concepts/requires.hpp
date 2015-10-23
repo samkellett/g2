@@ -5,8 +5,14 @@
 namespace g2 {
 namespace concepts {
 
+namespace detail {
+
+enum class defaulted{};
+
+} // namespace detail
+
 template <bool T>
-using requires_t = std::enable_if_t<T, std::size_t>;
+using requires_t = std::enable_if_t<T, detail::defaulted>;
 
 } // concepts
 
