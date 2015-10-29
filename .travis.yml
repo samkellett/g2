@@ -12,7 +12,7 @@ sudo: false
 env: UNIT_TESTS=true COMPILER=clang++-3.7 BOOST_VERSION=1.59.0 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
 addons:
   apt:
-    packages: ["clang-3.7", "valgrind"]
+    packages: ["clang-3.7", "xorg-dev", "libglu1-mesa-dev"]
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-precise-3.5
