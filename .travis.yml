@@ -48,7 +48,7 @@ install:
   # Install libc++ and libc++abi (on Linux only; Xcode uses libc++ by default)
   ############################################################################
   - |
-      if [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.0";
+      if [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.0"; fi
 
       LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
       LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
