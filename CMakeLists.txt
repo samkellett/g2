@@ -68,9 +68,6 @@ add_compiler_flag(CXX
     -Wzero-as-null-pointer-constant
 )
 
-# Prep CTest.
-enable_testing()
-
 # External project dependencies.
 find_package(Boost 1.58 EXACT REQUIRED COMPONENTS filesystem system)
 find_package(GLFW REQUIRED)
@@ -86,13 +83,17 @@ include_directories(
 
 # 3rd-party code is include as system headers to avoid warnings.
 include_directories(SYSTEM
+  ext/gtest/include
+  ext/gmock/include
+
+  ext/range-v3/include
+  ext/hana/include
+
   ${Boost_INCLUDE_DIRS}
   ${GLFW_INCLUDE_DIR}
   ${Meta_INCLUDE_DIR}
   ${YAMLCPP_INCLUDE_DIR}
 
-  ext/gtest/include
-  ext/gmock/include
 )
 
 link_directories(
@@ -108,6 +109,10 @@ add_subdirectory(src)
 # Tools.
 add_subdirectory(tools)
 
+# And unit tests.
+enable_testing()
+add_subdirectory(test)
+
 # And create our shared library.
 # add_library(${PROJECT_NAME} SHARED ${g2_SOURCES})
 
@@ -116,3 +121,4 @@ add_subdirectory(tools)
 # target_link_libraries(${PROJECT_NAME}
 #   ${YAMLCPP_LIBRARY}
 # )
+
