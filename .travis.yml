@@ -1,74 +1,86 @@
+# Heavily based on Boost.Hana's .travis.yml, (c) Louis Dionne 2015
+#  https://github.com/boostorg/hana
+
 language: c++
 compiler: clang
 os: linux
 sudo: false
 
-
 matrix:
   include:
-    # clang 3.6
-    - addons:
+    ##########################################################################
+    # Clang 3.7
+    ##########################################################################
+    - env: UNIT_TESTS=true COMPILER=clang++-3.7 BOOST_VERSION=1.59.0
+      addons: &clang37
         apt:
-          packages:
-            - clang-3.6
-          sources:
+          packages: ["clang-3.7", "valgrind"]
+          sources: &sources
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.5
             - llvm-toolchain-precise-3.6
+            - llvm-toolchain-precise-3.7
+            - llvm-toolchain-precise
 
 install:
   ############################################################################
-  # All the dependencies are installed to the deps/ subdirectory.
+  # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
   ############################################################################
-  - DEPS_DIR="${PWD}/deps"
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
 
   ############################################################################
   # Install Boost headers
   ############################################################################
-  - BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz"
-  - mkdir boost && travis_retry wget --quiet -O - ${BOOST_URL} | tar --strip-components=1 -xz -C boost
+  - if [[ "${BOOST_VERSION}" == "1.59.0" ]]; then BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz"; fi
+  - if [[ "${BOOST_URL}" != "" ]]; then mkdir boost && travis_retry wget --quiet -O - ${BOOST_URL} | tar --strip-components=1 -xz -C boost; fi
+#  - if [[ -d ${DEPS_DIR}/boost ]]; then CMAKE_OPTIONS+=" -DBOOST_ROOT=${DEPS_DIR}/boost"; fi
 
   ############################################################################
   # Install a recent CMake
   ############################################################################
-  - CMAKE_URL=http://www.cmake.org/files/v3.2/cmake-3.2.1-Linux-x86_64.tar.gz
-  - mkdir cmake
-  - travis_retry wget --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-  - export PATH=${PWD}/cmake/bin:${PATH}
+  - |
+    CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.1-Linux-x86_64.tar.gz"
+    mkdir cmake && travis_retry wget --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
 
   ############################################################################
-  # Install libc++ and libc++abi
-  # Note: We install libc++[abi] 3.6 even with Clang 3.5, because the 3.5
-  #       version does not seem to provide <ciso646>, which we require.
+  # Install libc++ and libc++abi (on Linux only; Xcode uses libc++ by default)
   ############################################################################
-  - LLVM_URL="http://llvm.org/releases/3.6.1/llvm-3.6.1.src.tar.xz"
-  - LIBCXX_URL="http://llvm.org/releases/3.6.1/libcxx-3.6.1.src.tar.xz"
-  - LIBCXXABI_URL="http://llvm.org/releases/3.6.1/libcxxabi-3.6.1.src.tar.xz"
-  - TAR_FMT="-xJ"
+  - |
+      if [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.0";
 
-  - mkdir -p llvm llvm/build llvm/projects/libcxx llvm/projects/libcxxabi
-  - travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm
-  - travis_retry wget --quiet -O - ${LIBCXX_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxx
-  - travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxxabi
-  - (cd llvm/build && cmake .. -DCMAKE_CXX_COMPILER=clang++ && make cxx -j2)
+      LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
+      LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
+      LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
+      TAR_FLAGS="-xJ"
+
+      mkdir -p llvm llvm/build llvm/projects/libcxx llvm/projects/libcxxabi
+      travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 ${TAR_FLAGS} -C llvm
+      travis_retry wget --quiet -O - ${LIBCXX_URL} | tar --strip-components=1 ${TAR_FLAGS} -C llvm/projects/libcxx
+      travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 ${TAR_FLAGS} -C llvm/projects/libcxxabi
+      (cd llvm/build && cmake .. -DCMAKE_INSTALL_PREFIX=${DEPS_DIR}/llvm/install -DCMAKE_CXX_COMPILER=clang++)
+      (cd llvm/build/projects/libcxx && make install -j2)
+      (cd llvm/build/projects/libcxxabi && make install -j2)
+
+      export CXXFLAGS="-I ${DEPS_DIR}/llvm/install/include/c++/v1"
+      export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
+      export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
 
 before_script:
   ############################################################################
-  # Go back to the root of the project.
+  # Go back to the root of the project and setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-
-  ############################################################################
-  # Setup the build directory
-  ############################################################################
-  - mkdir build
-  - cd build
-  - cmake ..
+  - (mkdir build && cd build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER})
 
 script:
   ############################################################################
-  # Build and run the unit tests.
+  # Build and run the unit tests and examples.
   ############################################################################
-  - export CTEST_PARALLEL_LEVEL=2 # Run unit tests on two cores
-  - make -j2 && make test
+  - |
+    if [[ "${UNIT_TESTS}" == "true" ]]; then
+      export CTEST_PARALLEL_LEVEL=2 # Run unit tests on two cores
+      (cd build && make -j2 && make test)
+    fi
 
