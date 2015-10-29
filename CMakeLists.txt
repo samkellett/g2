@@ -71,7 +71,6 @@ add_compiler_flag(CXX
 # External project dependencies.
 find_package(Boost 1.58 EXACT REQUIRED COMPONENTS filesystem system)
 find_package(GLFW REQUIRED)
-find_package(Meta REQUIRED)
 find_package(YamlCpp REQUIRED)
 
 # Set up our project's search path.
@@ -91,7 +90,6 @@ include_directories(SYSTEM
 
   ${Boost_INCLUDE_DIRS}
   ${GLFW_INCLUDE_DIR}
-  ${Meta_INCLUDE_DIR}
   ${YAMLCPP_INCLUDE_DIR}
 
 )
