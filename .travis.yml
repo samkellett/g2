@@ -70,7 +70,8 @@ install:
   ############################################################################
   - |
     git clone https://github.com/glfw/glfw.git
-    (cd glfw && git checkout 3.0.3 && cmake -DBUILD_SHARED_LIBS=ON && make -j2 && make install)
+    (cd glfw && git checkout 3.0.3 && cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX= . && make -j2 && make DESTDIR=$(pwd) install)
+    if [[ -d ${DEPS_DIR}/glfw ]]; then CMAKE_OPTIONS+=" -DGLFW_LOCATION=${DEPS_DIR}/glfw"; fi
 
 before_script:
   ############################################################################
