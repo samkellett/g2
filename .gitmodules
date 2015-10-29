@@ -10,3 +10,9 @@
 [submodule "scripts/misc"]
 	path = scripts/misc
 	url = https://github.com/biicode/misc.git
+[submodule "ext/range-v3"]
+	path = ext/range-v3
+	url = https://github.com/ericniebler/range-v3.git
+[submodule "ext/hana"]
+	path = ext/hana
+	url = https://github.com/boostorg/hana.git
