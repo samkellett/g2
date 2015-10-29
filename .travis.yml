@@ -12,7 +12,7 @@ sudo: false
 env: UNIT_TESTS=true COMPILER=clang++-3.7 BOOST_VERSION=1.58.0 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
 addons:
   apt:
-    packages: ["clang-3.7", "xorg-dev", "libglu1-mesa-dev", "libyaml-cpp-dev"]
+    packages: ["clang-3.7", "xorg-dev", "libglu1-mesa-dev"]
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-precise-3.5
@@ -77,6 +77,14 @@ install:
     git clone https://github.com/glfw/glfw.git
     (cd glfw && git checkout 3.0.3 && cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX= . && make -j2 && make DESTDIR=$(pwd) install)
     if [[ -d ${DEPS_DIR}/glfw ]]; then CMAKE_OPTIONS+=" -DGLFW_LOCATION=${DEPS_DIR}/glfw"; fi
+
+  ############################################################################
+  # Install yaml-cpp
+  ############################################################################
+  - |
+    git clone https://github.com/jbeder/yaml-cpp
+    (cd yaml-cpp && git checkout release-0.5.2 && cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX= . && make -j2 && make DESTDIR=$(pwd) install)
+    if [[ -d ${DEPS_DIR}/yaml-cpp ]]; then CMAKE_OPTIONS+=" -DYAML_CPPDIR=${DEPS_DIR}/yaml-cpp"; fi
 
 before_script:
   ############################################################################
