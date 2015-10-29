@@ -84,7 +84,7 @@ install:
   - |
     git clone https://github.com/jbeder/yaml-cpp
     (cd yaml-cpp && git checkout release-0.5.2 && cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX= -DBOOST_ROOT=${DEPS_DIR}/boost . && make -j2 && make DESTDIR=$(pwd) install)
-    if [[ -d ${DEPS_DIR}/yaml-cpp ]]; then CMAKE_OPTIONS+=" -DYAML_CPPDIR=${DEPS_DIR}/yaml-cpp"; fi
+    if [[ -d "${DEPS_DIR}/yaml-cpp" ]]; then CMAKE_OPTIONS+=" -DYAML_CPPDIR=${DEPS_DIR}/yaml-cpp"; fi
 
 before_script:
   ############################################################################

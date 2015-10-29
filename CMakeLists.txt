@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(g2 CXX)
 
+message("[CMake]: YAMLCPP_DIR = ${YAMLCPP_DIR}")
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(AddCompilerFlag)
