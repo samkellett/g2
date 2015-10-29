@@ -65,12 +65,19 @@ install:
       export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
 
+  ############################################################################
+  # Install GLFW
+  ############################################################################
+  - |
+    git clone https://github.com/glfw/glfw.git
+    (cd glfw && git checkout 3.0.3 && cmake -DBUILD_SHARED_LIBS=ON && make -j2 && make install
+
 before_script:
   ############################################################################
   # Go back to the root of the project and setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-  - (mkdir build && cd build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER})
+  - (mkdir build && cd build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER} ${CMAKE_OPTIONS})
 
 script:
   ############################################################################
