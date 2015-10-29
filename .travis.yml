@@ -12,7 +12,7 @@ sudo: false
 env: UNIT_TESTS=true COMPILER=clang++-3.7 BOOST_VERSION=1.58.0 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
 addons:
   apt:
-    packages: ["clang-3.7", "xorg-dev", "libglu1-mesa-dev"]
+    packages: ["clang-3.7", "xorg-dev", "libglu1-mesa-dev", "yaml-cpp"]
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-precise-3.5
@@ -30,7 +30,7 @@ install:
   ############################################################################
   # Install Boost headers
   ############################################################################
-  - if [[ "${BOOST_VERSION}" == "1.58.0" ]]; then BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58.tar.gz"; fi
+  - if [[ "${BOOST_VERSION}" == "1.58.0" ]]; then BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz"; fi
   - if [[ "${BOOST_URL}" != "" ]]; then mkdir boost && travis_retry wget --quiet -O - ${BOOST_URL} | tar --strip-components=1 -xz -C boost; fi
   - if [[ -d ${DEPS_DIR}/boost ]]; then CMAKE_OPTIONS+=" -DBOOST_ROOT=${DEPS_DIR}/boost"; fi
 
