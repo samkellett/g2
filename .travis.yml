@@ -32,7 +32,7 @@ install:
   ############################################################################
   - if [[ "${BOOST_VERSION}" == "1.58.0" ]]; then BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz"; fi
   - if [[ "${BOOST_URL}" != "" ]]; then mkdir boost && travis_retry wget --quiet -O - ${BOOST_URL} | tar --strip-components=1 -xz -C boost; fi
-  - if [[ -d ${DEPS_DIR}/boost ]]; then CMAKE_OPTIONS+=" -DBOOST_ROOT=${DEPS_DIR}/boost"; fi
+  - CMAKE_OPTIONS+=" -DBOOST_ROOT=${DEPS_DIR}/boost"
 
   ############################################################################
   # Build Boost libs
@@ -76,7 +76,7 @@ install:
   - |
     git clone https://github.com/glfw/glfw.git
     (cd glfw && git checkout 3.0.3 && cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX= . && make -j2 && make DESTDIR=$(pwd) install)
-    if [[ -d ${DEPS_DIR}/glfw ]]; then CMAKE_OPTIONS+=" -DGLFW_LOCATION=${DEPS_DIR}/glfw"; fi
+    CMAKE_OPTIONS+=" -DGLFW_LOCATION=${DEPS_DIR}/glfw"
 
   ############################################################################
   # Install yaml-cpp
@@ -84,7 +84,7 @@ install:
   - |
     git clone https://github.com/jbeder/yaml-cpp
     (cd yaml-cpp && git checkout release-0.5.2 && cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX= -DBOOST_ROOT=${DEPS_DIR}/boost . && make -j2 && make DESTDIR=$(pwd) install)
-    if [[ -d "${DEPS_DIR}/yaml-cpp" ]]; then CMAKE_OPTIONS+=" -DYAML_CPPDIR=${DEPS_DIR}/yaml-cpp"; fi
+    CMAKE_OPTIONS+=" -DYAMLCPP_DIR=${DEPS_DIR}/yaml-cpp"
 
 before_script:
   ############################################################################
