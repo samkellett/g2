@@ -6,21 +6,19 @@ compiler: clang
 os: linux
 sudo: false
 
-matrix:
-  include:
-    ##########################################################################
-    # Clang 3.7
-    ##########################################################################
-    - env: UNIT_TESTS=true COMPILER=clang++-3.7 BOOST_VERSION=1.59.0
-      addons: &clang37
-        apt:
-          packages: ["clang-3.7", "valgrind"]
-          sources: &sources
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.5
-            - llvm-toolchain-precise-3.6
-            - llvm-toolchain-precise-3.7
-            - llvm-toolchain-precise
+##########################################################################
+# Clang 3.7
+##########################################################################
+env: UNIT_TESTS=true COMPILER=clang++-3.7 BOOST_VERSION=1.59.0 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
+addons:
+  apt:
+    packages: ["clang-3.7", "valgrind"]
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.5
+      - llvm-toolchain-precise-3.6
+      - llvm-toolchain-precise-3.7
+      - llvm-toolchain-precise
 
 install:
   ############################################################################
@@ -34,7 +32,7 @@ install:
   ############################################################################
   - if [[ "${BOOST_VERSION}" == "1.59.0" ]]; then BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz"; fi
   - if [[ "${BOOST_URL}" != "" ]]; then mkdir boost && travis_retry wget --quiet -O - ${BOOST_URL} | tar --strip-components=1 -xz -C boost; fi
-#  - if [[ -d ${DEPS_DIR}/boost ]]; then CMAKE_OPTIONS+=" -DBOOST_ROOT=${DEPS_DIR}/boost"; fi
+  - if [[ -d ${DEPS_DIR}/boost ]]; then CMAKE_OPTIONS+=" -DBOOST_ROOT=${DEPS_DIR}/boost"; fi
 
   ############################################################################
   # Install a recent CMake
