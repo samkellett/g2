@@ -24,6 +24,7 @@ private:
   mockglfw &operator=(mockglfw) = delete;
 };
 
+inline
 mockglfw::mockglfw()
 {
   instance = this;
