@@ -31,7 +31,7 @@ system initialise(system env)
 
   glfwMakeContextCurrent(env.window());
 
-  return std::move(env);
+  return env;
 }
 
 } // namespace runtime
