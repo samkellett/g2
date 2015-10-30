@@ -12,20 +12,20 @@ static_assert(! std::is_copy_assignable<utils::scoped_file>{}, "Shouldn't be cop
 static_assert(std::is_move_constructible<utils::scoped_file>{}, "Should be movable.");
 static_assert(std::is_move_assignable<utils::scoped_file>{}, "Should be movable.");
 
-TEST(CreateFileWithName, HasCorrectName)
+TEST(DISABLED_CreateFileWithName, HasCorrectName)
 {
   utils::scoped_file uut("badger");
 
   ASSERT_EQ("badger", uut.path().filename());
 }
-TEST(CreateFile, FileExists)
+TEST(DISABLED_CreateFile, FileExists)
 {
   utils::scoped_file uut;
 
   ASSERT_TRUE(boost::filesystem::exists(uut.path()));
 }
 
-TEST(CreateFile, OutOfScoped_DoesntExist)
+TEST(DISABLED_CreateFile, OutOfScoped_DoesntExist)
 {
   boost::filesystem::path path;
 

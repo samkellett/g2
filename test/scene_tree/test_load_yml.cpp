@@ -8,11 +8,11 @@ using namespace g2;
 
 using testing::Test;
 
-struct Fixture : Test
+struct DISABLED_Fixture : Test
 {
   const utils::scoped_file config;
 
-  Fixture()
+  DISABLED_Fixture()
   : config{}
   {
   	std::ofstream fs;
@@ -21,7 +21,7 @@ struct Fixture : Test
   }
 };
 
-TEST_F(Fixture, LoadYml)
+TEST_F(DISABLED_Fixture, LoadYml)
 {
   const auto &path(config.path());
 
